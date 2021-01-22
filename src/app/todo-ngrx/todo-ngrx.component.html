@@ -1,0 +1,44 @@
+
+
+<body>
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <span class="fa fa-window-restore"></span>
+    <h1>Todo App with NGRX </h1>
+    <p>Angular 6 , NGRX Store and Effects with Json Server</p>
+  </div>
+  </div>
+
+
+<div id="wrapper">
+  <div [class.loading]="(loading$ | async)"  id="todo-list" *ngIf="!(error$ | async); else error">
+  
+    <div id="list">
+      <h2>Task Todo List</h2>
+
+      <ul *ngIf="(todoItems$ | async); else noItems">
+        <li *ngFor="let todo of todoItems$ | async">
+          <span>{{ todo.name }}</span>
+          <button class="btn btn-danger" (click)="deleteItem(todo.id)" >x</button>
+        </li>
+      </ul>
+      <ng-template #noItems>
+        <ul>
+          <li style="max-width:250px;margin:0 auto;">No items found. Are you sure there's <em>nothing</em> you want?</li>
+        </ul>
+      </ng-template>
+    </div>
+
+    <form (ngSubmit)="addItem()">
+      <input type="text" [(ngModel)]="newTodoItem.name" placeholder="Item" name="name">
+      <button type="submit" >+</button>
+    </form>
+  </div>
+</div>
+
+<ng-template #error>
+  <h2>{{(error$ | async)?.message}}</h2>
+</ng-template>
+
+</body>
